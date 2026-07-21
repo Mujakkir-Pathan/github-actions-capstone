@@ -1,0 +1,41 @@
+name: Reusable Build & Test
+on: 
+    workflow_call:
+        inputs:
+            go_version:
+                required: true
+                type: string
+
+            run_tests:
+                required: false
+                default: true
+                type: boolean   
+
+        outputs:
+            test_result:
+                description: Test execution result
+                value: ${{ jobs.build-and-test.outputs.test_result }}
+jobs:
+    build-and-test:
+        runs-on: ubuntu-latest
+        outputs: 
+            test_result:
+        steps:
+            - name: Checkout the code
+              uses: actions/checkout@v4
+
+            - name: setup go
+              uses: actions/setup-go@v5
+              with:
+                go-version: ${{ inputs.go_version }}
+
+            - name: install dependencies
+              run: go mod download
+
+            - name: Run Tests
+              if: ${{ inputs.run_tests }}
+              run: go test ./...
+
+            - name: Set Test Result
+              id: test-result
+              run: echo "result= "
