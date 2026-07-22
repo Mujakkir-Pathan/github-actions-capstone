@@ -1,41 +1,52 @@
 name: Reusable Build & Test
-on: 
-    workflow_call:
-        inputs:
-            go_version:
-                required: true
-                type: string
 
-            run_tests:
-                required: false
-                default: true
-                type: boolean   
+on:
+  workflow_call:
+    inputs:
+      go_version:
+        required: true
+        type: string
 
-        outputs:
-            test_result:
-                description: Test execution result
-                value: ${{ jobs.build-and-test.outputs.test_result }}
+      run_tests:
+        required: false
+        default: true
+        type: boolean
+
+    outputs:
+      test_result:
+        description: Test execution result
+        value: ${{ jobs.build-and-test.outputs.job_test_result }}
+
 jobs:
-    build-and-test:
-        runs-on: ubuntu-latest
-        outputs: 
-            test_result:
-        steps:
-            - name: Checkout the code
-              uses: actions/checkout@v4
+  build-and-test:
+    runs-on: ubuntu-latest
 
-            - name: setup go
-              uses: actions/setup-go@v5
-              with:
-                go-version: ${{ inputs.go_version }}
+    outputs:
+      job_test_result: ${{ steps.set-test-result.outputs.test_result }}
 
-            - name: install dependencies
-              run: go mod download
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
 
-            - name: Run Tests
-              if: ${{ inputs.run_tests }}
-              run: go test ./...
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: ${{ inputs.go_version }}
 
-            - name: Set Test Result
-              id: test-result
-              run: echo "result= "
+      - name: Install Dependencies
+        run: go mod download
+
+      - name: Run Tests
+        id: run-tests
+        if: ${{ inputs.run_tests }}
+        continue-on-error: true
+        run: go test ./...
+
+      - name: Set Test Result
+        id: set-test-result
+        run: |
+          if [ "${{ steps.run-tests.outcome }}" = "success" ]; then
+            echo "test_result=passed" >> $GITHUB_OUTPUT
+          else
+            echo "test_result=failed" >> $GITHUB_OUTPUT
+          fi
