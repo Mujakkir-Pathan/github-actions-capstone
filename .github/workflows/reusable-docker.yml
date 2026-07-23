@@ -7,7 +7,7 @@ on:
                 required: true
                 type: string
 
-            tag:
+            tags:
                 required: true
                 type: string
 
@@ -24,7 +24,7 @@ on:
 
         outputs:
             image_url:
-                description: Docker image url
+                description: Primary Docker image URL (latest tag)
                 value: ${{ jobs.docker-build-and-push.outputs.job_image_url }}
 
 jobs:
@@ -49,11 +49,11 @@ jobs:
               with:
                 context: ${{ inputs.docker_context }}
                 push: true
-                tags: ${{ inputs.image_name }}:${{ inputs.tag }}
+                tags: ${{ inputs.tags }}
             
             - name: Set Image URL
               id: set-image-url
               run: |
-                echo "image_url=${{ inputs.image_name }}:${{ inputs.tag }}" >> $GITHUB_OUTPUT
+                echo "image_url=${{ inputs.image_name }}:latest" >> $GITHUB_OUTPUT
                 
 
