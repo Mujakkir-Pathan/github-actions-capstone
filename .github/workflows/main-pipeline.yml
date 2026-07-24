@@ -86,7 +86,7 @@ jobs:
           exit-code: 1
           format: table
           output: trivy-frontend-report.txt
-          trivy-options: '--skip-version-check'
+          trivy-options: --skip-version-check
 
       - name: Upload Frontend Scan Report
         if: always()
