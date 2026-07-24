@@ -61,7 +61,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Scan Backend Image
-        uses: aquasecurity/trivy-action@0.33.1
+        uses: aquasecurity/trivy-action@v0.33.1
         with:
           scan-type: image
           image-ref: mujakkirpathan/devboard-backend:latest
@@ -78,7 +78,7 @@ jobs:
           path: trivy-backend-report.txt
 
       - name: Scan Frontend Image
-        uses: aquasecurity/trivy-action@0.33.1
+        uses: aquasecurity/trivy-action@v0.33.1
         with:
           scan-type: image
           image-ref: mujakkirpathan/devboard-frontend:latest
@@ -99,6 +99,7 @@ jobs:
     needs:
       - docker-frontend
       - docker-backend
+      - security-scan
     environment: production
 
     steps:
