@@ -53,6 +53,47 @@ jobs:
       docker_username: ${{ secrets.DOCKER_USERNAME }}
       docker_token: ${{ secrets.DOCKER_TOKEN }}
 
+
+  security-scan:
+    needs: 
+      -  docker-backend
+      -  docker-frontend
+    runs-on: ubuntu-latest
+    steps:
+      - name: Scan Backend Image
+        uses: aquasecurity/trivy-action@0.33.1
+        with:
+          scan-type: image
+          image-ref: mujakkirpathan/devboard-backend:latest
+          severity: CRITICAL
+          exit-code: 1
+          format: table
+          output: trivy-backend-report.txt
+
+      - name: Upload Backend Scan Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: trivy-backend-report
+          path: trivy-backend-report.txt
+
+      - name: Scan Frontend Image
+        uses: aquasecurity/trivy-action@0.33.1
+        with:
+          scan-type: image
+          image-ref: mujakkirpathan/devboard-frontend:latest
+          severity: CRITICAL
+          exit-code: 1
+          format: table
+          output: trivy-frontend-report.txt
+
+      - name: Upload Frontend Scan Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: trivy-frontend-report
+          path: trivy-frontend-report.txt
+
   deploy:
     runs-on: ubuntu-latest
     needs:
