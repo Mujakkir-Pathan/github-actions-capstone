@@ -34,12 +34,14 @@ jobs:
           go-version: ${{ inputs.go_version }}
 
       - name: Install Dependencies
+        working-directory: backend
         run: go mod download
 
       - name: Run Tests
         id: run-tests
         if: ${{ inputs.run_tests }}
         continue-on-error: true
+        working-directory: backend
         run: go test ./...
 
       - name: Set Test Result
