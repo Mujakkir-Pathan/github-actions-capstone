@@ -1,3 +1,11 @@
+## Badges
+
+[![Main Pipeline](https://github.com/Mujakkir-Pathan/github-actions-capstone/actions/workflows/main-pipeline.yml/badge.svg)](https://github.com/Mujakkir-Pathan/github-actions-capstone/actions/workflows/main-pipeline.yml)
+
+[![Health Check](https://github.com/Mujakkir-Pathan/github-actions-capstone/actions/workflows/health-check.yml/badge.svg)](https://github.com/Mujakkir-Pathan/github-actions-capstone/actions/workflows/health-check.yml)
+
+[![PR Pipeline](https://github.com/Mujakkir-Pathan/github-actions-capstone/actions/workflows/pr-pipeline.yml/badge.svg)](https://github.com/Mujakkir-Pathan/github-actions-capstone/actions/workflows/pr-pipeline.yml)
+
 # DevBoard
 
 This repository contains **DevBoard**, a production-style three-tier application built as part of the GitHub Actions CI/CD project. It demonstrates a complete DevOps workflow using GitHub Actions, Docker, PostgreSQL, automated testing, security scanning, and deployment.
@@ -67,14 +75,6 @@ The application will start all three services:
   - Push Protection
   - Secret Detection
 
-## Badges
-
-[![Main Pipeline](https://github.com/Mujakkir-Pathan/github-actions-capstone/actions/workflows/main-pipeline.yml/badge.svg)](https://github.com/Mujakkir-Pathan/github-actions-capstone/actions/workflows/main-pipeline.yml)
-
-[![Health Check](https://github.com/Mujakkir-Pathan/github-actions-capstone/actions/workflows/health-check.yml/badge.svg)](https://github.com/Mujakkir-Pathan/github-actions-capstone/actions/workflows/health-check.yml)
-
-[![PR Pipeline](https://github.com/Mujakkir-Pathan/github-actions-capstone/actions/workflows/pr-pipeline.yml/badge.svg)](https://github.com/Mujakkir-Pathan/github-actions-capstone/actions/workflows/pr-pipeline.yml)
-
 ## Pipeline Architecture Diagram
 
 ```mermaid
@@ -124,12 +124,3 @@ devboard/
 ├── docker-compose.yml
 └── README.md
 ```
-
-## Future Improvements
-
-- Add Slack notifications
-- Deploy to Kubernetes
-- Infrastructure as Code using Terraform
-- Monitoring with Prometheus & Grafana
-- Automated rollback on deployment failure
-- Container image signing
