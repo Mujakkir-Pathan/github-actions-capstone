@@ -22,4 +22,3 @@ jobs:
               run: |
                 echo "Branch:${{ github.head_ref}}"
                 echo "Test Result: ${{ needs.build-and-test.outputs.test_result }}"
-
